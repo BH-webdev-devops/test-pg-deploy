@@ -17,6 +17,10 @@ app.get('/', (req : Request, res : Response ) : any => {
     return res.send(`Welcome to our node and postgres API`)
 })
 
+app.get('/test', (req: Request, res : Response): any => {
+    return res.send(`Test deploy`)
+})
+
 const startServer = async () => {
     try{
         // Test the connection to the database
