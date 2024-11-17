@@ -1,0 +1,33 @@
+name: Deploy to Render
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16' # Change to the Node.js version you're using
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run build (if applicable)
+        run: npm run build # Skip if you're not using a build step
+
+      - name: Deploy to Render
+        run: |
+          curl -fsSL https://render.com/deploy/scripts/render-cli.sh | bash
+          render deploy --service your-render-service-name
+        env:
+          RENDER_API_KEY: ${{ secrets.RENDER_API_KEY }}
